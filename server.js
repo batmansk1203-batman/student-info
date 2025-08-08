@@ -15,14 +15,14 @@ const pool = new Pool({
 });
 
 // Table creation if not exists
-pool.query(\`
+pool.query(`
   CREATE TABLE IF NOT EXISTS students (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     age INT NOT NULL,
     department TEXT NOT NULL
   );
-\`);
+`);
 
 app.post("/student", async (req, res) => {
   const { name, age, department } = req.body;
@@ -33,10 +33,11 @@ app.post("/student", async (req, res) => {
     );
     res.json({ message: "Student added successfully!" });
   } catch (err) {
+    console.error("Error inserting student:", err);
     res.status(500).json({ error: "Database error" });
   }
 });
 
 app.listen(PORT, () => {
-  console.log(\`Server running on port \${PORT}\`);
+  console.log(`Server running on port ${PORT}`);
 });
